@@ -31,7 +31,7 @@ jobs:
         env:
           keyStoreAlias: ${{secrets.RELEASE_KEYSTORE_ALIAS}}
           keyStoreAliasPassword: ${{secrets.RELEASE_KEYSTORE_ALIAS_PASSPHRASE}}
-          keyStoreFilePath: ${{secrets.RELEASE_KEYSTORE}}
+          #keyStoreFilePath: ${{secrets.RELEASE_KEYSTORE}}
           keyStoreFilePath: gymer_keystore
           keyStorePassword: ${{secrets.RELEASE_KEYSTORE_PASSPHRASE}}
         run: |
