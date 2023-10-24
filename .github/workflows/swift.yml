@@ -51,7 +51,13 @@ jobs:
         with:
           args: --strict
 
+  buildSwift:
+      runs-on: macos-latest
+
+      steps:
+      - uses: actions/checkout@v3
       - name: Build swift
-        run: swift build -v
+        run: swift build -
+
 
   
