@@ -1,0 +1,64 @@
+name: Android CI
+
+on:
+  push:
+    branches:
+      - 'release/*'
+      - 'develop'
+      - 'master'
+  pull_request:
+    branches:
+      - 'release/*'
+      - 'develop'
+      - 'master'
+
+jobs:
+  build:
+    name: Run build with ktlint and unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Access Keystore Properties
+        env:
+          keyStoreAlias: ${{secrets.RELEASE_KEYSTORE_ALIAS}}
+          keyStoreAliasPassword: ${{secrets.RELEASE_KEYSTORE_ALIAS_PASSPHRASE}}
+          keyStoreFilePath: ${{secrets.RELEASE_KEYSTORE}}
+          keyStoreFilePath: gymer_keystore
+          keyStorePassword: ${{secrets.RELEASE_KEYSTORE_PASSPHRASE}}
+        run: |
+          echo "kesytoreAlias is $keyStoreAlias"
+          echo "keyStoreAliasPassword is $keyStoreAliasPassword"
+          echo "keyStoreFilePath is $keyStoreFilePath"
+          echo "keyStorePassword is $keyStorePassword"
+          echo keyStoreAlias=\"$keyStoreAlias\" > ../keystore.properties
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+
+  SwiftLint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: GitHub Action for SwiftLint
+        uses: stanfordbdhg/action-swiftlint@v4
+        with:
+          args: --strict
+  build:
+  name: Build ios
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: swift build -v
+    - name: Run tests
+      run: swift test -v
