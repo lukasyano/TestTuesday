@@ -14,6 +14,7 @@ on:
 
 jobs:
   build:
+
     name: Run build with ktlint and unit tests
     runs-on: ubuntu-latest
 
@@ -45,7 +46,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
 
-  SwiftLint:
+    name: Run SwiftLint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -53,7 +54,8 @@ jobs:
         uses: stanfordbdhg/action-swiftlint@v4
         with:
           args: --strict
-  build:
+
+    name: Build Swift
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v3
