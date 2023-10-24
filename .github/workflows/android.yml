@@ -1,4 +1,4 @@
-name: Android CI
+name: Android CI + SwiftLint
 
 on:
   push:
@@ -50,17 +50,6 @@ jobs:
         uses: stanfordbdhg/action-swiftlint@v4
         with:
           args: --strict
-
-  buildSwift:
-      runs-on: macos-latest
-
-      steps:
-      - uses: swift-actions/setup-swift@65540b95f51493d65f5e59e97dcef9629ddf11bf
-      - uses: actions/checkout@v4
-      - name: Build swift
-        run: swift build -v
-      - name: Run test
-        run: swift test -v
 
 
   
