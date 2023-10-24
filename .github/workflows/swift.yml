@@ -15,7 +15,7 @@ on:
 jobs:
   build:
 
-    name: Run build with ktlint and unit tests
+    name: Run build with ktlint&&swiftlint and unit tests
     runs-on: ubuntu-latest
 
     steps:
