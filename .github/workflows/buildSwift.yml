@@ -15,28 +15,23 @@ jobs:
         uses: stanfordbdhg/action-swiftlint@v4
         with:
           args: --strict
+
   Build:
-    runs-on: macos-12
+      runs-on: macos-12
+      steps:
+        - uses: actions/checkout@v3
 
-    steps:
-      - uses: actions/checkout@v3
-#      - name: Install Dependencies
-#        run: |
-#          cd GitHubActions
-#          pod install --repo-update
-#        shell: bash
+        - name: Xcode Setup
+          uses: maxim-lobanov/setup-xcode@v1
+          with:
+            xcode-version: '14.1'
 
-      - name: Xcode Setup
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: '14.1'
+        - name: Build
+          run: |
+            cd GitHubActions
+            xcodebuild build -project GitHubActions.xcodeproj -scheme GitHubActions clean build -sdk iphoneos CODE_SIGNING_ALLOWED=No
 
-      - name: Build
-        run: |
-          cd GitHubActions
-          xcodebuild build -workspace GitHubActions.xcworkspace -scheme GitHubActions clean build -sdk iphoneos CODE_SIGNING_ALLOWED=No
-
-      - name: Run tests
-        run: |
-          cd GitHubActions
-          xcodebuild test -workspace GitHubActions.xcworkspace -scheme GitHubActions clean build -sdk iphoneos -destination "platform=iOS Simulator,OS=16.1,name=iPhone 14 Pro Max" CODE_SIGNING_ALLOWED=No
+        - name: Run tests
+          run: |
+            cd GitHubActions
+            xcodebuild test -project GitHubActions.xcodeproj -scheme GitHubActions clean build -sdk iphoneos -destination "platform=iOS Simulator,OS=16.1,name=iPhone 14 Pro Max" CODE_SIGNING_ALLOWED=No
