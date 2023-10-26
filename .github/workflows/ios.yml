@@ -1,0 +1,25 @@
+name: Swift Build
+
+on:
+  push:
+      branches:
+      - 'release/*'
+      - 'develop'
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Swift
+      uses: apple/swift@5.5
+
+    - name: Build
+      run: swift build
+
+    - name: Test
+      run: swift test
