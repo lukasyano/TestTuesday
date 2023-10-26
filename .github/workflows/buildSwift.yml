@@ -2,8 +2,10 @@ name: pull_request
 
 on:
   push:
-    branches: ["main"]
-
+    branches:
+      - 'release/*'
+      - 'develop'
+      - 'master'
 jobs:
   SwiftLint:
     runs-on: ubuntu-latest
