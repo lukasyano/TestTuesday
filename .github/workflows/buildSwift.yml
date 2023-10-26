@@ -32,7 +32,7 @@ jobs:
             run: ./gradlew build
 
           - name: Build for iOS
-            run: ./gradlew packForXCode
+            run: ./gradlew GymerTest
 
           - name: Test for iOS
             run: xcodebuild -workspace .xcworkspace -scheme -destination 'platform=iOS Simulator,OS=15.0,name=iPhone 13'
